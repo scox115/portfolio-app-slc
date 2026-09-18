@@ -40,6 +40,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    # Deploy to Azure Container App (Manually added task)
     - task: AzureContainerApps@1
       displayName: 'Deploy to Azure Container App'
       inputs:
