@@ -15,6 +15,9 @@ variables:
   containerRegistry: 'portolioappslc-hnh6e7etcyg0h9eu.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  containerAppName: 'portfolio-app-slc'
+  resourceGroup: 'Portfolio-SLC'
+  azureSubscription: 'My Learning (538b6b7a-cb91-46ff-a6b9-5ae34c8fff96)'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -37,3 +40,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: AzureContainerApps@1
+      displayName: 'Deploy to Azure Container App'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        containerAppName: '$(containerAppName)'
+        resourceGroup: '$(resourceGroup)'
+        imageToDeploy: '$(containerRegistry)/$(imageRepository):$(tag)'
