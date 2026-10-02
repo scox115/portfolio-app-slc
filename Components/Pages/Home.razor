@@ -1,24 +1,111 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Portfolio | Home</PageTitle>
 
-<hr>
+<div class="portfolio-container">
+    <header class="hero-section">
+        <div class="profile-frame">
+            <!-- Replace with the path to your actual picture in wwwroot/images/ -->
+            <img src="images/profile.jpg" alt="Your Name Profile Picture" class="profile-img" />
+        </div>
 
-<div>
-	<h1>Hello, Scottie Cox!</h1>
+        <h1 class="headline">Hi, I'm <span class="highlight">Scott Cox</span></h1>
+        <p class="subtitle">Software Developer / .NET</p>
+    </header>
+
+    <main class="bio-section">
+		<h2>About Me</h2>        
+        <p class="bio-text">
+            I am a results-driven Full-Stack Software Developer specializing in building modern web applications with C#, 
+            .NET, Azure, and Blazor. I thrive at the intersection of robust backend architecture and dynamic frontend design, 
+            transforming complex requirements into clean, scalable software. My professional approach is rooted in writing maintainable code, 
+            leveraging cloud-native environments, and ensuring that every application I build delivers a seamless, responsive user experience.
+    	</p>
+        <p class="bio-text">
+            Throughout my career, I have focused on solving the technical friction points that slow down application performance and cloud deployment. 
+            I excel at architecting single-page applications with Blazor, optimizing C# .NET APIs for high-throughput data processing, and designing secure, 
+            cost-effective infrastructure inside Azure. Whether it is refactoring legacy monolithic systems into agile cloud services, tuning database queries, 
+            or automating CI/CD pipelines, I look at software through a holistic lens to eliminate bottlenecks and reduce technical debt.
+        </p>
+        <p class="bio-text">
+            What drives my work is the tangible impact of well-crafted technology. I am deeply motivated by the challenge of cloud optimization—finding the most elegant, 
+            secure, and resource-efficient ways to scale applications globally. By blending a rigorous engineering mindset with an eye for user-centric frontend design, 
+            I bring a unique value to engineering teams: the ability to own a feature from the database layer to the browser, ensuring your development cycle stays fast, reliable, and aligned with business goals.
+        </p>
+
+        <p class="bio-text">
+            When I'm not coding or working on projects, I focus on staying updated with industry trends.
+        </p>
+
+        <div class="cta-container">
+            <a href="/resume" class="btn-primary">View Full Resume</a>
+        </div>
+    </main>
 </div>
 
-<hr>
+<style>
+    .portfolio-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #333;
+    }
+    .hero-section {
+        text-align: center;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+    }
+    .profile-frame {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background-color: #f0f0f0;
+    }
+    .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .headline {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .highlight {
+        color: #0078d4;
+    }
+    .subtitle {
+        font-size: 1.2rem;
+        color: #666;
+    }
+    .bio-section {
+        padding-top: 2rem;
+    }
+    .bio-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    .cta-container {
+        text-align: center;
+        margin-top: 2.5rem;
+    }
+    .btn-primary {
+        display: inline-block;
+        background-color: #0078d4;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s;
+    }
+    .btn-primary:hover {
+        background-color: #005a9e;
+    }
+</style>
 
-<p>Welcome to Portfolio App, this is where I showcase my work and projects.</p>
-
-<ul>
-	<li><p>Full CI/CD pipeline is in place.</p></li>
-
-</ul>
-
-
-<hr>
-
-<h4>Version 1.0.1</h4>
 
