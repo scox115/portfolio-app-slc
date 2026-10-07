@@ -60,6 +60,10 @@
             @foreach (var project in filteredProjects)
             {
                 <div class="project-card">
+                    @if (!string.IsNullOrEmpty(project.ImageUrl))
+                    {
+                        <img src="@project.ImageUrl" alt="Screenshot of @project.Title" class="project-image" loading="lazy" />
+                    }
                     <div class="project-meta">
                         <span class="project-type">@project.Type</span>
                     </div>
