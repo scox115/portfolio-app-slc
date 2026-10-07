@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using portfolio_app_slc.Components;
+using portfolio_app_slc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddSingleton<ProjectService>();
 
 // Azure Container Apps terminates HTTPS at its ingress and forwards plain HTTP,
 // so trust its X-Forwarded-* headers to see the original scheme and client IP.
