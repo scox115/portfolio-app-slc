@@ -19,7 +19,7 @@ env:
   RESOURCE_GROUP: Portfolio-SLC
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
       - name: Build image
         run: docker build -t "$REGISTRY/$IMAGE:${{ github.sha }}" -f Dockerfile .
 
-      # Everything below runs only for commits on main, never for pull request checks.
+      # Pull request checks stop here. Commits on main also push the image for the deploy job.
       - name: Sign in to Azure
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: azure/login@v2
@@ -42,8 +42,27 @@ jobs:
           az acr login --name "$ACR_NAME"
           docker push "$REGISTRY/$IMAGE:${{ github.sha }}"
 
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # The production environment waits for approval in GitHub before this job runs.
+    environment:
+      name: production
+      url: https://portfolio-app-slc.gentlehill-e454e29c.westus2.azurecontainerapps.io
+    # A newer merge replaces a deploy that is still waiting for approval.
+    concurrency:
+      group: production
+      cancel-in-progress: true
+    steps:
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Deploy to Container App
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
           az extension add --name containerapp --upgrade --yes
           az containerapp update \
