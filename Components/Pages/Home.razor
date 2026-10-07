@@ -1,5 +1,6 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@inject ProjectService ProjectService
 
 <PageTitle>Portfolio | Home</PageTitle>
 <SeoTags Title="Scott Cox | .NET Software Developer"
@@ -24,25 +25,19 @@
     <section class="bio-section">
         <h2>About Me</h2>
         <p class="bio-text">
-            I am a results-driven Full-Stack Software Developer specializing in building modern web applications with C#,
-            .NET, Azure, and Blazor. I thrive at the intersection of robust backend architecture and dynamic frontend design,
-            transforming complex requirements into clean, scalable software. My professional approach is rooted in writing maintainable code,
-            leveraging cloud-native environments, and ensuring that every application I build delivers a seamless, responsive user experience.
+            I'm a full-stack .NET developer with more than 10 years of experience building web applications and APIs
+            in C#, ASP.NET Core, Blazor and SQL Server. At First Citizens Bank I led the move of a mission-critical
+            AngularJS application to Angular and an ASP.NET Core Web API. Before that, at Allied Payment Network,
+            I migrated a client-facing portal from Angular to Blazor, built high-throughput APIs for payment data,
+            and shipped .NET microservices in Docker on Kubernetes through Azure DevOps pipelines.
         </p>
         <p class="bio-text">
-            Throughout my career, I have focused on solving the technical friction points that slow down application performance and cloud deployment.
-            I excel at architecting single-page applications with Blazor, optimizing C# .NET APIs for high-throughput data processing, and designing secure,
-            cost-effective infrastructure inside Azure. Whether it is refactoring legacy monolithic systems into agile cloud services, tuning database queries,
-            or automating CI/CD pipelines, I look at software through a holistic lens to eliminate bottlenecks and reduce technical debt.
+            I like owning a feature from the database to the browser: shaping SQL Server schemas and queries,
+            keeping APIs fast, and making the interface feel quick. This site is one of those projects too, a Blazor
+            app on Azure Container Apps that deploys from GitHub Actions on every merge.
         </p>
         <p class="bio-text">
-            What drives my work is the tangible impact of well-crafted technology. I am deeply motivated by the challenge of cloud optimization—finding the most elegant,
-            secure, and resource-efficient ways to scale applications globally. By blending a rigorous engineering mindset with an eye for user-centric frontend design,
-            I bring a unique value to engineering teams: the ability to own a feature from the database layer to the browser, ensuring your development cycle stays fast, reliable, and aligned with business goals.
-        </p>
-
-        <p class="bio-text">
-            When I'm not coding or working on projects, I focus on staying updated with industry trends.
+            Before software, I served six years in the U.S. Navy as an Electronics Technician.
         </p>
 
         <div class="cta-container">
@@ -50,7 +45,7 @@
         </div>
     </section>
 
-    <section class="projects-section">
+    <section id="projects" class="projects-section">
         <h2>Project Showcase</h2>
 
         <div class="filter-bar">
@@ -94,52 +89,13 @@
 
 @code {
     private string selectedTag = "All";
+    private IReadOnlyList<Project> allProjects = [];
     private List<string> availableTags = new();
-    private List<ProjectItem> filteredProjects = new();
-
-    // TODO: replace these sample projects with real ones. Links are left empty so no card points at a dead URL.
-    private List<ProjectItem> allProjects = new()
-    {
-        new ProjectItem
-        {
-            Title = "GameAppPortfolio",
-            Description = "KINGS OF THE CARD ARENA",
-            Type = "Game",
-            Tags = new[] { ".NET", "SQL", "Cloud", "Blazor", "Web API" },
-            LiveUrl = "https://play.scottcoxdev.com"
-        },
-        new ProjectItem
-        {
-            Title = "E-Commerce Cloud Platform",
-            Description = "An enterprise microservices web engine handling thousands of real-time transactions with integrated distributed cache architecture.",
-            Type = "Web App",
-            Tags = new[] { ".NET", "SQL", "Cloud" }
-        },
-        new ProjectItem
-        {
-            Title = "Dev Portfolio Hub",
-            Description = "A lightweight, modern web portfolio engine built on Blazor with static compilation and highly responsive component caching.",
-            Type = "Frontend",
-            Tags = new[] { "Blazor", ".NET" }
-        },
-        new ProjectItem
-        {
-            Title = "Automated Infrastructure API",
-            Description = "A secure RESTful engine managing server instance metadata and dynamic scaling policies via secure JWT protocols.",
-            Type = "Backend API",
-            Tags = new[] { "Web API", ".NET", "Cloud" }
-        },
-        new ProjectItem
-        {
-            Title = "S.O.L.I.D.",
-            Description = "Embed SOLID and Design Patterns Explicitly.",
-            Type = "Full Stack",
-            Tags = new[] { "SOLID", "Design Patterns" }
-        }
-    };
+    private IEnumerable<Project> filteredProjects = [];
 
     protected override void OnInitialized()
     {
+        allProjects = ProjectService.Projects;
         availableTags = allProjects.SelectMany(p => p.Tags).Distinct().Order().ToList();
         filteredProjects = allProjects;
     }
@@ -147,24 +103,6 @@
     private void FilterProjects(string tag)
     {
         selectedTag = tag;
-        if (tag == "All")
-        {
-            filteredProjects = allProjects;
-        }
-        else
-        {
-            filteredProjects = allProjects.Where(p => p.Tags.Contains(tag)).ToList();
-        }
-    }
-
-    // internal structural model
-    public class ProjectItem
-    {
-        public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Type { get; set; } = string.Empty;
-        public string[] Tags { get; set; } = Array.Empty<string>();
-        public string GitHubUrl { get; set; } = string.Empty;
-        public string LiveUrl { get; set; } = string.Empty;
+        filteredProjects = tag == "All" ? allProjects : allProjects.Where(p => p.Tags.Contains(tag));
     }
 }
