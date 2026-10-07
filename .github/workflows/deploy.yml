@@ -1,0 +1,52 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  ACR_NAME: portolioappslc
+  REGISTRY: portolioappslc-hnh6e7etcyg0h9eu.azurecr.io
+  IMAGE: portfolioappslc
+  CONTAINER_APP: portfolio-app-slc
+  RESOURCE_GROUP: Portfolio-SLC
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t "$REGISTRY/$IMAGE:${{ github.sha }}" -f Dockerfile .
+
+      # Everything below runs only for commits on main, never for pull request checks.
+      - name: Sign in to Azure
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Push image to registry
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          az acr login --name "$ACR_NAME"
+          docker push "$REGISTRY/$IMAGE:${{ github.sha }}"
+
+      - name: Deploy to Container App
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          az extension add --name containerapp --upgrade --yes
+          az containerapp update \
+            --name "$CONTAINER_APP" \
+            --resource-group "$RESOURCE_GROUP" \
+            --image "$REGISTRY/$IMAGE:${{ github.sha }}"
