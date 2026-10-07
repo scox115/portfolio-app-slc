@@ -1,0 +1,25 @@
+name: CI
+
+# Builds the image on every pull request and on main. A pass on main starts "Deploy to Azure".
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t portfolioappslc:ci -f Dockerfile .
