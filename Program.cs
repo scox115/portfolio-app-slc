@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using portfolio_app_slc.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Azure Container Apps terminates HTTPS at its ingress and forwards plain HTTP,
+// so trust its X-Forwarded-* headers to see the original scheme and client IP.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 var app = builder.Build();
+
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
