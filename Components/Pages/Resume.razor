@@ -3,13 +3,14 @@
 <PageTitle>Portfolio | Resume</PageTitle>
 
 <div class="resume-container">
+    <div class="back-link-top">
+        <a href="/">&larr; Back to Home</a>
+    </div>
     <header class="resume-header">
         <h1>Scott Cox</h1>
-        <p>Woodburn, Indiana | scottlcox1961@gmail.com | linkedin.com/in/scox115</p>
-        <!-- Place a copy of your resume PDF inside wwwroot/files/ -->
-        <a href="files/resume.pdf" download class="btn-secondary">Download PDF Version</a>
+        <p>Woodburn, Indiana | <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener">linkedin.com/in/scox115</a></p>
+        <a href="files/resume.pdf" download class="btn-secondary">Download PDF Version</a>        
     </header>
-
     <section class="resume-block">
         <h2>Professional Summary</h2>
         <p>
@@ -143,85 +144,3 @@
         <a href="/">&larr; Back to Home</a>
     </div>
 </div>
-
-<style>
-    body {
-        background-color: #FFFFF0;
-    }
-
-    p.tight-line {
-        margin: 0;
-    }
-
-    .resume-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-        font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    .resume-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #333;
-    }
-
-    .btn-secondary {
-        display: inline-block;
-        margin-top: 1rem;
-        border: 1px solid #0078d4;
-        color: #0078d4;
-        padding: 0.5rem 1.5rem;
-        border-radius: 4px;
-        text-decoration: none;
-        font-size: 0.9rem;
-    }
-
-        .btn-secondary:hover {
-            background-color: #f3f9fe;
-        }
-
-    .resume-block {
-        margin-bottom: 2rem;
-    }
-
-        .resume-block h2 {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 0.3rem;
-            color: #444;
-        }
-
-    .job-entry {
-        margin-top: 1rem;
-    }
-
-    .job-date {
-        font-style: italic;
-        color: #777;
-    }
-
-    .skills-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .skill-tag {
-        background-color: #f0f0f0;
-        padding: 0.4rem 0.8rem;
-        border-radius: 4px;
-        font-size: 0.9rem;
-    }
-
-    .back-link {
-        margin-top: 3rem;
-        text-align: center;
-    }
-
-        .back-link a {
-            color: #0078d4;
-            text-decoration: none;
-        }
-</style>
