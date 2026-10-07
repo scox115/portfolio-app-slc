@@ -46,14 +46,14 @@ jobs:
     needs: build
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    # The production environment waits for approval in GitHub before this job runs.
+    # Each deploy is recorded in the repo's Deployments panel.
     environment:
       name: production
       url: https://portfolio-app-slc.gentlehill-e454e29c.westus2.azurecontainerapps.io
-    # A newer merge replaces a deploy that is still waiting for approval.
+    # Deploys run one at a time, in merge order.
     concurrency:
       group: production
-      cancel-in-progress: true
+      cancel-in-progress: false
     steps:
       - name: Sign in to Azure
         uses: azure/login@v2
