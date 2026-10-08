@@ -4,6 +4,7 @@
     "description": "KINGS OF THE CARD ARENA",
     "type": "Game",
     "tags": [".NET", "SQL", "Cloud", "Blazor", "Web API"],
+    "gitHubUrl": "https://github.com/scox115/gameappportfolio",
     "liveUrl": "https://play.scottcoxdev.com",
     "imageUrl": "images/projects/game-app-portfolio.jpg"
   }
