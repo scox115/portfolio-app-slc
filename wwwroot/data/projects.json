@@ -7,24 +7,6 @@
     "liveUrl": "https://play.scottcoxdev.com"
   },
   {
-    "title": "E-Commerce Cloud Platform",
-    "description": "An enterprise microservices web engine handling thousands of real-time transactions with integrated distributed cache architecture.",
-    "type": "Web App",
-    "tags": [".NET", "SQL", "Cloud"]
-  },
-  {
-    "title": "Dev Portfolio Hub",
-    "description": "A lightweight, modern web portfolio engine built on Blazor with static compilation and highly responsive component caching.",
-    "type": "Frontend",
-    "tags": ["Blazor", ".NET"]
-  },
-  {
-    "title": "Automated Infrastructure API",
-    "description": "A secure RESTful engine managing server instance metadata and dynamic scaling policies via secure JWT protocols.",
-    "type": "Backend API",
-    "tags": ["Web API", ".NET", "Cloud"]
-  },
-  {
     "title": "S.O.L.I.D.",
     "description": "Embed SOLID and Design Patterns Explicitly.",
     "type": "Full Stack",
