@@ -17,7 +17,7 @@
     }
     else
     {
-        <meta property="og:image" content="@(Navigation.BaseUri)@Image.TrimStart('/')" />
+        <meta property="og:image" content="@ImageUrl" />
         <meta property="og:image:alt" content="@ImageAlt" />
     }
     <meta name="twitter:card" content="summary_large_image" />
@@ -29,4 +29,6 @@
     // Optional preview image, a site path such as "/images/blog/my-post.jpg". Defaults to the site preview.
     [Parameter] public string? Image { get; set; }
     [Parameter] public string? ImageAlt { get; set; }
+
+    private string ImageUrl => Navigation.BaseUri + Image?.TrimStart('/');
 }
