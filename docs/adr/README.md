@@ -10,3 +10,4 @@ Each record explains one significant decision: the problem, what was chosen, wha
 | [0004](0004-custom-domain-managed-certificates.md) | Serve scottcoxdev.com with Container Apps managed certificates | Accepted |
 | [0005](0005-uptime-check-in-github-actions.md) | Check uptime from GitHub Actions and report outages as issues | Accepted |
 | [0006](0006-contact-popup.md) | Show the contact email in a native pop-up with a copy button | Accepted |
+| [0007](0007-blog-posts-as-markdown.md) | Keep blog posts as Markdown files in the repository | Accepted |

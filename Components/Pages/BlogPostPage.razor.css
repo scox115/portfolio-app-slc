@@ -1,0 +1,128 @@
+.blog-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #333;
+    line-height: 1.7;
+}
+
+.back-link {
+    color: #0078d4;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+.post-header {
+    margin-bottom: 2rem;
+}
+
+    .post-header h1 {
+        font-size: 2.1rem;
+        line-height: 1.25;
+        margin: 1rem 0 0.5rem;
+    }
+
+    .post-header time {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+}
+
+    .post-tags li {
+        background: #f3f9fe;
+        color: #0078d4;
+        border-radius: 999px;
+        padding: 0.15rem 0.7rem;
+        font-size: 0.85rem;
+    }
+
+/* The post body is rendered from Markdown, so its elements need ::deep to be styled. */
+.post-body ::deep h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0 0.75rem;
+}
+
+.post-body ::deep h3 {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.post-body ::deep a {
+    color: #0078d4;
+}
+
+.post-body ::deep img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+.post-body ::deep blockquote {
+    margin: 1.5rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid #0078d4;
+    background: #f7f9fb;
+    color: #444;
+}
+
+.post-body ::deep code {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.9em;
+    background: #f3f3f3;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+}
+
+.post-body ::deep pre {
+    background: #1e1e1e;
+    color: #f3f3f3;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+
+    .post-body ::deep pre code {
+        background: none;
+        padding: 0;
+        color: inherit;
+    }
+
+.post-body ::deep table {
+    border-collapse: collapse;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+}
+
+.post-body ::deep th,
+.post-body ::deep td {
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+}
+
+.post-footer {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+@media (max-width: 480px) {
+    .post-header h1 {
+        font-size: 1.7rem;
+    }
+}
