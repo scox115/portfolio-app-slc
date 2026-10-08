@@ -5,27 +5,59 @@
 @if (post is not null)
 {
     <PageTitle>@post.Title | Scott Cox</PageTitle>
-    <SeoTags Title="@post.Title" Description="@post.Summary" />
+    <SeoTags Title="@post.Title" Description="@post.Summary" Image="@post.Image" ImageAlt="@post.ImageAlt" />
 
-    <article class="blog-container post">
+    <article class="post">
+        <a href="/blog" class="back-link">← All posts</a>
+
         <header class="post-header">
-            <a href="/blog" class="back-link">← All posts</a>
-            <h1>@post.Title</h1>
-            <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
             @if (post.Tags.Length > 0)
             {
-                <ul class="post-tags" aria-label="Tags">
+                <ul class="tags" aria-label="Tags">
                     @foreach (var tag in post.Tags)
                     {
                         <li>@tag</li>
                     }
                 </ul>
             }
+            <h1>@post.Title</h1>
+            @if (!string.IsNullOrEmpty(post.Summary))
+            {
+                <p class="post-summary">@post.Summary</p>
+            }
+            <div class="byline">
+                <img src="images/profile.jpg" alt="" width="44" height="44" />
+                <div>
+                    <span class="byline-name">Scott Cox</span>
+                    <span class="byline-meta">
+                        <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
+                        · @post.ReadingMinutes min read
+                    </span>
+                </div>
+            </div>
         </header>
+
+        @if (!string.IsNullOrEmpty(post.Image))
+        {
+            <img src="@post.Image" alt="@post.ImageAlt" class="cover" />
+        }
+
         <div class="post-body">@((MarkupString)post.Html)</div>
-        <footer class="post-footer">
-            <a href="/blog" class="back-link">← All posts</a>
-        </footer>
+
+        <aside class="hire-box">
+            <h2>Hiring a .NET developer?</h2>
+            <p>I build full-stack web apps and APIs with C#, ASP.NET Core, Blazor and SQL Server. I'd like to hear about your team.</p>
+            <div class="hire-actions">
+                @if (!string.IsNullOrEmpty(SiteInfo.Email))
+                {
+                    <button type="button" class="btn-light" popovertarget="contact-popover">Contact me</button>
+                }
+                <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener" class="btn-outline">LinkedIn</a>
+                <a href="/resume" class="btn-outline">Résumé</a>
+            </div>
+        </aside>
+
+        <a href="/blog" class="back-link">← All posts</a>
     </article>
 }
 
