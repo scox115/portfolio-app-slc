@@ -99,3 +99,10 @@ main {
             align-items: center;
         }
 }
+
+/* Leave the header off printed pages, such as a printed résumé. */
+@media print {
+    .site-nav {
+        display: none;
+    }
+}

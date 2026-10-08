@@ -1,141 +1,131 @@
-﻿@page "/resume"
+@page "/resume"
 
-<PageTitle>Portfolio | Resume</PageTitle>
+<PageTitle>Scott Cox | Résumé</PageTitle>
 <SeoTags Title="Scott Cox | Résumé"
          Description="Résumé of Scott Cox, full-stack .NET developer with 10+ years building web applications and APIs in .NET Core, C#, ASP.NET Core and SQL Server." />
 
-<div class="resume-container">
-    <header class="resume-header">
-        <h1>Scott Cox</h1>
-        <p>Woodburn, Indiana | <a href="@($"mailto:{SiteInfo.Email}")">@SiteInfo.Email</a> | <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener">linkedin.com/in/scox115</a></p>
-        <a href="files/resume.pdf" download class="btn-secondary">Download PDF Version</a>        
+<div class="resume">
+    <header class="resume-banner">
+        <img src="images/profile.jpg" alt="Scott Cox" class="banner-photo" width="104" height="104" />
+        <div class="banner-text">
+            <h1>Scott Cox</h1>
+            <p class="banner-title">Full-stack .NET Developer · U.S. Navy veteran</p>
+            <p class="banner-contact">
+                <span>Woodburn, Indiana</span>
+                @if (!string.IsNullOrEmpty(SiteInfo.Email))
+                {
+                    <a href="@($"mailto:{SiteInfo.Email}")">@SiteInfo.Email</a>
+                }
+                <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener">linkedin.com/in/scox115</a>
+            </p>
+            <a href="files/scott-cox-resume.docx" download class="btn-download">Download Word résumé</a>
+        </div>
     </header>
-    <section class="resume-block">
+
+    <section class="resume-section">
         <h2>Professional Summary</h2>
-        <p>
-            Full stack .NET Developer with 10+ years of experience designing, building, and scaling high
-            performance web applications and APIs using .NET Core, C#, ASP.NET Core, and SQL Server.
+        <p class="summary">
+            Full-stack .NET Developer with 10+ years of experience designing, building, and scaling high-performance
+            web applications and APIs using .NET Core, C#, ASP.NET Core, and SQL Server.
         </p>
     </section>
 
-    <section class="resume-block">
+    <section class="resume-section">
         <h2>Experience</h2>
-        <div class="job-entry">
-            <h3>.NET Developer - First Citizens Bank</h3>
-            <span class="job-date">November 2022 – August 2026</span>
-            <ul>
-                <li>
-                    Led the architectural modernization of legacy financial software by porting a mission
-                    critical AngularJS application to a decoupled Angular and ASP.NET Core Web API
-                    ecosystem.
-                </li>
-                <li>
-                    Designed and optimized relational database schemas using SQL Server and Entity
-                    Framework Core, focusing on query performance tuning, index optimization, and data
-                    security compliance.
-                </li>
-                <li>
-                    Collaborated closely in an Agile/Scrum environment to deliver reliable, bi-monthly
-                    production deployments, utilizing structured unit testing to maintain high code coverage and
-                    reduce regression bugs.
-                </li>
-            </ul>
-        </div>
-        <div class="job-entry">
-            <h3>.NET Developer - Allied Payment Network</h3>
-            <span class="job-date">November 2020 – September 2022</span>
-            <ul>
-                <li>
-                    Architected and executed the migration of a core client-facing web portal from Angular to
-                    Blazor, significantly improving initial page load performance and streamlining code sharing
-                    across the C# stack.
-                </li>
-                <li>
-                    Built secure, high-throughput RESTful APIs utilizing asynchronous programming
-                    (async/await) and dependency injection patterns to process transactional payment data
-                    efficiently.
-                </li>
-                <li>
-                    Containerized .NET microservices using Docker and managed orchestrations across a
-                    Kubernetes (AKS/Cloud) cluster through automated Azure DevOps CI/CD pipelines.
-                </li>
-            </ul>
-        </div>
-        <div class="job-entry">
-            <h3>.NET Developer - Trans-Works / Contractor</h3>
-            <span class="job-date">March 2018 – July 2020</span>
-            <ul>
-                <li>
-                    Engineered robust backend systems and third-party API integrations supporting logistics and
-                    supply chain enterprise workflows.
-                </li>
-                <li>
-                    Utilized LINQ and advanced SQL querying to generate complex data reports and
-                    background processing tasks with a focus on memory optimization and minimizing
-                    transactional locking.
-                </li>
-                <li>
-                    Participated in quarterly milestone releases under strict Agile timelines, actively engaging in
-                    peer code reviews to enforce SOLID design principles and clean code standards.
-                </li>
-            </ul>
-        </div>
-        <div class="job-entry">
-            <h3>.NET Developer - Logikos, Inc. </h3>
-            <span class="job-date">May 2016 – March 2018</span>
-            <ul>
-                <li>
-                    Developed, debugged, and optimized an enterprise in-house C# desktop application,
-                    leveraging asynchronous event handling and structured MVVM/MVC design patterns.
-                </li>
-                <li>
-                    Authored comprehensive unit test suites to ensure maximum reliability of core business logic
-                    prior to release cycles.
-                </li>
-            </ul>
-        </div>
-
+        @foreach (var job in jobs)
+        {
+            <article class="job-card">
+                <div class="job-heading">
+                    <h3>@job.Title <span class="job-company">· @job.Company</span></h3>
+                    <span class="job-date">@job.Dates</span>
+                </div>
+                <ul>
+                    @foreach (var point in job.Points)
+                    {
+                        <li>@point</li>
+                    }
+                </ul>
+            </article>
+        }
     </section>
 
-    <section class="resume-block">
+    <section class="resume-section">
         <h2>Skills</h2>
-        <div class="skills-grid">
-            <span class="skill-tag">C#</span>
-            <span class="skill-tag">JavaScript</span>
-            <span class="skill-tag">TypeScript</span>
-            <span class="skill-tag">.NET Core</span>
-            <span class="skill-tag">Asp.Net Core</span>
-            <span class="skill-tag">MVC</span>
-            <span class="skill-tag">Entity Framework</span>
-            <span class="skill-tag">LINQ</span>
-            <span class="skill-tag">Blazor</span>
-            <span class="skill-tag">SQL Server</span>
-            <span class="skill-tag"> PostgreSQL</span>
-            <span class="skill-tag"> AZURE (App Services, SQL Database) </span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">Visual Studio</span>
-            <span class="skill-tag">VS Code</span>
-            <span class="skill-tag">Azure DevOps</span>
-            <span class="skill-tag">CI/CD Pipeline</span>
-            <span class="skill-tag">Web API</span>
+        <div class="skill-groups">
+            @foreach (var group in skillGroups)
+            {
+                <div class="skill-group">
+                    <h3>@group.Name</h3>
+                    <ul class="skill-pills">
+                        @foreach (var skill in group.Skills)
+                        {
+                            <li>@skill</li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </section>
 
-    <section class="resume-block">
-        <h2>Education</h2>
-        <p>A.A.S. | Computer Science | Ivy Tech Community College (Aug 2015)</p>
-    </section>
+    <div class="info-cards">
+        <section class="info-card">
+            <h2>Education</h2>
+            <p><strong>A.A.S., Computer Science</strong></p>
+            <p>Ivy Tech Community College · Aug 2015</p>
+        </section>
 
-    <section class="resume-block">
-        <h2>Certifications</h2>
-        <p class="tight-line">Software Development | Ivy Tech Community College (Aug 2015)</p>
-        <p class="tight-line">Web Application Development | Ivy Tech Community College (Aug 2015)</p>
-        <p class="tight-line">AZ-900 | Microsoft Certified: Azure Fundamentals (Sep 2026)</p>
-    </section>
+        <section class="info-card">
+            <h2>Certifications</h2>
+            <p><strong>AZ-900</strong> Microsoft Certified: Azure Fundamentals · Sep 2026</p>
+            <p><strong>Software Development</strong> Ivy Tech Community College · Aug 2015</p>
+            <p><strong>Web Application Development</strong> Ivy Tech Community College · Aug 2015</p>
+        </section>
 
-    <section class="resume-block">
-        <h2>Military</h2>
-        <p>Electronic Technician E5 | Honorable Discharge | U.S. Navy (May 1981–May 1987)</p>
-    </section>
+        <section class="info-card">
+            <h2>Military</h2>
+            <p><strong>Electronic Technician E5</strong></p>
+            <p>U.S. Navy · May 1981 – May 1987</p>
+            <p>Honorable Discharge</p>
+        </section>
+    </div>
 </div>
+
+@code {
+    private record Job(string Title, string Company, string Dates, string[] Points);
+    private record SkillGroup(string Name, string[] Skills);
+
+    private static readonly Job[] jobs =
+    [
+        new(".NET Developer", "First Citizens Bank", "Nov 2022 – Aug 2026",
+        [
+            "Led the architectural modernization of legacy financial software by porting a mission-critical AngularJS application to a decoupled Angular and ASP.NET Core Web API ecosystem.",
+            "Designed and optimized relational database schemas using SQL Server and Entity Framework Core, focusing on query performance tuning, index optimization, and data security compliance.",
+            "Collaborated closely in an Agile/Scrum environment to deliver reliable, bi-monthly production deployments, utilizing structured unit testing to maintain high code coverage and reduce regression bugs.",
+        ]),
+        new(".NET Developer", "Allied Payment Network", "Nov 2020 – Sep 2022",
+        [
+            "Architected and executed the migration of a core client-facing web portal from Angular to Blazor, significantly improving initial page load performance and streamlining code sharing across the C# stack.",
+            "Built secure, high-throughput RESTful APIs utilizing asynchronous programming (async/await) and dependency injection patterns to process transactional payment data efficiently.",
+            "Containerized .NET microservices using Docker and managed orchestrations across a Kubernetes (AKS/Cloud) cluster through automated Azure DevOps CI/CD pipelines.",
+        ]),
+        new(".NET Developer", "Trans-Works / Contractor", "Mar 2018 – Jul 2020",
+        [
+            "Engineered robust backend systems and third-party API integrations supporting logistics and supply chain enterprise workflows.",
+            "Utilized LINQ and advanced SQL querying to generate complex data reports and background processing tasks with a focus on memory optimization and minimizing transactional locking.",
+            "Participated in quarterly milestone releases under strict Agile timelines, actively engaging in peer code reviews to enforce SOLID design principles and clean code standards.",
+        ]),
+        new(".NET Developer", "Logikos, Inc.", "May 2016 – Mar 2018",
+        [
+            "Developed, debugged, and optimized an enterprise in-house C# desktop application, leveraging asynchronous event handling and structured MVVM/MVC design patterns.",
+            "Authored comprehensive unit test suites to ensure maximum reliability of core business logic prior to release cycles.",
+        ]),
+    ];
+
+    private static readonly SkillGroup[] skillGroups =
+    [
+        new("Languages", ["C#", "JavaScript", "TypeScript", "SQL"]),
+        new("Frameworks", [".NET Core", "ASP.NET Core", "Web API", "MVC", "Blazor", "Entity Framework", "LINQ"]),
+        new("Data & Cloud", ["SQL Server", "PostgreSQL", "Azure App Services", "Azure SQL Database"]),
+        new("Tools & DevOps", ["Git", "Docker", "Azure DevOps", "CI/CD pipelines", "Visual Studio", "VS Code"]),
+    ];
+}
