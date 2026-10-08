@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<ProjectService>();
+builder.Services.AddSingleton<BlogService>();
 
 // Azure Container Apps terminates HTTPS at its ingress and forwards plain HTTP,
 // so trust its X-Forwarded-* headers to see the original scheme and client IP.

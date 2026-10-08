@@ -62,6 +62,23 @@ Add an entry to [`wwwroot/data/projects.json`](wwwroot/data/projects.json):
 
 `gitHubUrl`, `liveUrl` and `imageUrl` are optional. Images go in `wwwroot/images/projects/`, ideally 16:9. The tag filters on the home page are built from the tags you use.
 
+## Write a blog post
+
+Add a Markdown file to [`wwwroot/data/blog/`](wwwroot/data/blog/). The file name becomes the URL, so `2026-10-15-my-post.md` is served at `/blog/2026-10-15-my-post`. Start it with front matter:
+
+```markdown
+---
+title: My post title
+date: 2026-10-15
+summary: One or two sentences for the Blog page and link previews.
+tags: AI, .NET
+---
+
+The post, in Markdown.
+```
+
+`date` is required, and a post without it is skipped. Posts are listed newest first, and raw HTML in a post is not rendered. Images go in `wwwroot/images/blog/` and are linked as `![Alt text](/images/blog/my-image.png)`. A post goes live when its pull request is merged.
+
 ## Architecture Decision Records
 
 The reasons behind the main choices are in [docs/adr](docs/adr/README.md).

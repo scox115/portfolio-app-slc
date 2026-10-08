@@ -1,0 +1,43 @@
+@page "/blog/{Slug}"
+@inject BlogService BlogService
+@inject NavigationManager Navigation
+
+@if (post is not null)
+{
+    <PageTitle>@post.Title | Scott Cox</PageTitle>
+    <SeoTags Title="@post.Title" Description="@post.Summary" />
+
+    <article class="blog-container post">
+        <header class="post-header">
+            <a href="/blog" class="back-link">← All posts</a>
+            <h1>@post.Title</h1>
+            <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
+            @if (post.Tags.Length > 0)
+            {
+                <ul class="post-tags" aria-label="Tags">
+                    @foreach (var tag in post.Tags)
+                    {
+                        <li>@tag</li>
+                    }
+                </ul>
+            }
+        </header>
+        <div class="post-body">@((MarkupString)post.Html)</div>
+        <footer class="post-footer">
+            <a href="/blog" class="back-link">← All posts</a>
+        </footer>
+    </article>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = string.Empty;
+
+    private BlogPost? post;
+
+    protected override void OnParametersSet()
+    {
+        post = BlogService.Find(Slug);
+        if (post is null)
+            Navigation.NotFound();
+    }
+}
