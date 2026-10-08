@@ -28,6 +28,7 @@
 }
 .highlight {
     color: #0078d4;
+    white-space: nowrap;
 }
 .tagline {
     font-size: 1.35rem;
@@ -257,3 +258,17 @@
         .link-icon.live:hover {
             color: #004578;
         }
+
+@media (max-width: 480px) {
+    .profile-frame {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1rem;
+    }
+    .headline {
+        font-size: 1.75rem;
+    }
+    .tagline {
+        font-size: 1.15rem;
+    }
+}
