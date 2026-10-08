@@ -1,0 +1,50 @@
+name: Uptime check
+
+# Checks the live site every 30 minutes. If it is down, opens a "Site down" issue
+# (GitHub notifies the repo owner); when it is back up, closes that issue.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the site
+        id: check
+        run: |
+          failed=""
+          for url in https://scottcoxdev.com https://www.scottcoxdev.com; do
+            ok=""
+            for attempt in 1 2 3; do
+              if curl -fsS --max-time 30 "$url" | grep -q "Scott Cox"; then ok=1; break; fi
+              sleep 20
+            done
+            [ -z "$ok" ] && failed="$failed $url"
+          done
+          echo "failed=$failed" >> "$GITHUB_OUTPUT"
+
+      - name: Open or close the "Site down" issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          FAILED: ${{ steps.check.outputs.failed }}
+        run: |
+          open=$(gh issue list --state open --search '"Site down" in:title' --json number --jq '.[0].number')
+          if [ -n "$FAILED" ]; then
+            body="The uptime check could not load:$FAILED. Run: $GITHUB_SERVER_URL/$GH_REPO/actions/runs/$GITHUB_RUN_ID"
+            if [ -n "$open" ]; then gh issue comment "$open" --body "Still down. $body"
+            else gh issue create --title "Site down" --body "$body"; fi
+            exit 1
+          elif [ -n "$open" ]; then
+            gh issue close "$open" --comment "The site is back up."
+          fi
