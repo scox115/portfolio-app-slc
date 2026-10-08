@@ -65,6 +65,9 @@ public class BlogService
             !DateOnly.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
             return null;
 
+        var body = string.Join('\n', lines[bodyStart..]);
+        var words = body.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries).Length;
+
         return new BlogPost
         {
             Slug = slug,
@@ -73,7 +76,10 @@ public class BlogService
             Summary = fields.GetValueOrDefault("summary") ?? string.Empty,
             Tags = (fields.GetValueOrDefault("tags") ?? string.Empty)
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries),
-            Html = Markdown.ToHtml(string.Join('\n', lines[bodyStart..]), Pipeline),
+            Image = fields.GetValueOrDefault("image") ?? string.Empty,
+            ImageAlt = fields.GetValueOrDefault("imageAlt") ?? string.Empty,
+            ReadingMinutes = Math.Max(1, (int)Math.Round(words / 200.0)),
+            Html = Markdown.ToHtml(body, Pipeline),
         };
     }
 }

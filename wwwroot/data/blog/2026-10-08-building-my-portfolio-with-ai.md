@@ -3,6 +3,8 @@ title: Building my portfolio with an AI pair programmer
 date: 2026-10-08
 summary: What I shipped this week with Claude Code, the mistakes it made, and why reviewing every change is still my job.
 tags: AI, .NET, Blazor, Azure, Job search
+image: /images/blog/building-my-portfolio-with-ai.jpg
+imageAlt: Title card for the post, with a code snippet showing the AI suggestion I caught
 ---
 
 I'm a full-stack .NET developer looking for my next role, and I've decided to do the search in public. This blog is where I'll write up what I build, how I use AI coding tools to build it, and what I learn along the way. Each post covers one real piece of work.

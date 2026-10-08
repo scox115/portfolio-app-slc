@@ -1,33 +1,58 @@
 @page "/blog"
 @inject BlogService BlogService
 
-<PageTitle>Portfolio | Blog</PageTitle>
-<SeoTags Title="Scott Cox | Blog"
+<PageTitle>Human in the Loop | Scott Cox</PageTitle>
+<SeoTags Title="Human in the Loop | Scott Cox"
          Description="Notes from Scott Cox on building software with AI, what it gets wrong, and proving developer skills in the age of AI." />
 
-<div class="blog-container">
-    <header class="blog-header">
-        <h1>Blog</h1>
-        <p class="blog-intro">What I'm building with AI coding tools, what they get wrong, and what I'm learning on the job search.</p>
+<div class="blog-page">
+    <header class="blog-banner">
+        <img src="images/profile.jpg" alt="Scott Cox" class="banner-photo" width="88" height="88" />
+        <div>
+            <p class="banner-eyebrow">Scott Cox · Blog</p>
+            <h1>Human in the Loop</h1>
+            <p class="banner-intro">What I'm building with AI coding tools, what they get wrong, and what I'm learning on the job search.</p>
+        </div>
     </header>
 
     @if (BlogService.Posts.Count == 0)
     {
-        <p>The first post is on its way.</p>
+        <p class="empty">The first post is on its way.</p>
     }
     else
     {
         <ul class="post-list">
             @foreach (var post in BlogService.Posts)
             {
-                <li class="post-item">
-                    <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
-                    <h2><a href="@($"/blog/{post.Slug}")">@post.Title</a></h2>
-                    @if (!string.IsNullOrEmpty(post.Summary))
+                var url = $"/blog/{post.Slug}";
+                <li class="post-card">
+                    @if (!string.IsNullOrEmpty(post.Image))
                     {
-                        <p>@post.Summary</p>
+                        <a href="@url" class="card-image" tabindex="-1" aria-hidden="true">
+                            <img src="@post.Image" alt="" loading="lazy" />
+                        </a>
                     }
-                    <a href="@($"/blog/{post.Slug}")" class="read-more" aria-label="@($"Read {post.Title}")">Read the post</a>
+                    <div class="card-body">
+                        <p class="card-meta">
+                            <time datetime="@post.Date.ToString("yyyy-MM-dd")">@post.Date.ToString("MMMM d, yyyy")</time>
+                            · @post.ReadingMinutes min read
+                        </p>
+                        <h2><a href="@url">@post.Title</a></h2>
+                        @if (!string.IsNullOrEmpty(post.Summary))
+                        {
+                            <p class="card-summary">@post.Summary</p>
+                        }
+                        @if (post.Tags.Length > 0)
+                        {
+                            <ul class="tags" aria-label="Tags">
+                                @foreach (var tag in post.Tags)
+                                {
+                                    <li>@tag</li>
+                                }
+                            </ul>
+                        }
+                        <a href="@url" class="read-more" aria-label="@($"Read {post.Title}")">Read the post →</a>
+                    </div>
                 </li>
             }
         </ul>
