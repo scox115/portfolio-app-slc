@@ -21,7 +21,7 @@
             <a href="/resume" class="btn-secondary">Résumé</a>
             @if (!string.IsNullOrEmpty(SiteInfo.Email))
             {
-                <a href="@($"mailto:{SiteInfo.Email}")" class="btn-secondary">Contact me</a>
+                <button type="button" class="btn-secondary" popovertarget="contact-popover">Contact me</button>
             }
         </div>
 

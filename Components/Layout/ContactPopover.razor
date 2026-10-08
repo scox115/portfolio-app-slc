@@ -1,0 +1,12 @@
+@* Pop-up opened by any button with popovertarget="contact-popover". Uses the browser's Popover API, so it needs no JavaScript to open or close. *@
+<div id="contact-popover" popover class="contact-popover" role="dialog" aria-labelledby="contact-popover-title">
+    <h2 id="contact-popover-title">Get in touch</h2>
+    <p>Email me at</p>
+    <p class="contact-email">
+        <a href="@($"mailto:{SiteInfo.Email}")">@SiteInfo.Email</a>
+    </p>
+    <div class="contact-actions">
+        <button type="button" class="contact-copy" data-copy-text="@SiteInfo.Email">Copy address</button>
+        <button type="button" class="contact-close" popovertarget="contact-popover" popovertargetaction="hide">Close</button>
+    </div>
+</div>

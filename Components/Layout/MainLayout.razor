@@ -10,7 +10,7 @@
             <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener">LinkedIn</a>
             @if (!string.IsNullOrEmpty(SiteInfo.Email))
             {
-                <a href="@($"mailto:{SiteInfo.Email}")" class="nav-contact">Contact</a>
+                <button type="button" class="nav-contact" popovertarget="contact-popover">Contact</button>
             }
         </nav>
     </header>
@@ -22,6 +22,11 @@
         </article>
     </main>
 </div>
+
+@if (!string.IsNullOrEmpty(SiteInfo.Email))
+{
+    <ContactPopover />
+}
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
