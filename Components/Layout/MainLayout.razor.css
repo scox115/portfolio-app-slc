@@ -46,14 +46,18 @@ main {
                 text-decoration: underline;
             }
 
-            .site-nav nav a.nav-contact {
+            .site-nav nav .nav-contact {
+                font: inherit;
+                font-weight: 600;
+                border: 0;
+                cursor: pointer;
                 color: #fff;
                 background-color: #0078d4;
                 padding: 0.2rem 0.8rem;
                 border-radius: 4px;
             }
 
-                .site-nav nav a.nav-contact:hover {
+                .site-nav nav .nav-contact:hover {
                     background-color: #005a9e;
                     text-decoration: none;
                 }
@@ -80,7 +84,7 @@ main {
     }
 
 @media (max-width: 480px) {
-    .site-nav nav a.nav-contact {
+    .site-nav nav .nav-contact {
         padding: 0.15rem 0.6rem;
     }
 
