@@ -5,11 +5,5 @@
     "type": "Game",
     "tags": [".NET", "SQL", "Cloud", "Blazor", "Web API"],
     "liveUrl": "https://play.scottcoxdev.com"
-  },
-  {
-    "title": "S.O.L.I.D.",
-    "description": "Embed SOLID and Design Patterns Explicitly.",
-    "type": "Full Stack",
-    "tags": ["SOLID", "Design Patterns"]
   }
 ]
