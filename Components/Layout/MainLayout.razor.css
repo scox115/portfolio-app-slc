@@ -1,4 +1,4 @@
-.page {
+﻿.page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -45,6 +45,18 @@ main {
             .site-nav nav a:hover {
                 text-decoration: underline;
             }
+
+            .site-nav nav a.nav-contact {
+                color: #fff;
+                background-color: #0078d4;
+                padding: 0.2rem 0.8rem;
+                border-radius: 4px;
+            }
+
+                .site-nav nav a.nav-contact:hover {
+                    background-color: #005a9e;
+                    text-decoration: none;
+                }
 
 #blazor-error-ui {
     color-scheme: light only;

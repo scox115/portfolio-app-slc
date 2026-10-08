@@ -8,6 +8,10 @@
             <a href="/resume">Résumé</a>
             <a href="https://github.com/scox115" target="_blank" rel="noopener">GitHub</a>
             <a href="https://www.linkedin.com/in/scox115" target="_blank" rel="noopener">LinkedIn</a>
+            @if (!string.IsNullOrEmpty(SiteInfo.Email))
+            {
+                <a href="@($"mailto:{SiteInfo.Email}")" class="nav-contact">Contact</a>
+            }
         </nav>
     </header>
 
