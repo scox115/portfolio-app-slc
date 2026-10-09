@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @inject ProjectService ProjectService
+@inject WakeService WakeService
 
 <PageTitle>Portfolio | Home</PageTitle>
 <SeoTags Title="Scott Cox | .NET Software Developer"
@@ -112,6 +113,12 @@
         allProjects = ProjectService.Projects;
         availableTags = allProjects.SelectMany(p => p.Tags).Distinct().Order().ToList();
         filteredProjects = allProjects;
+    }
+
+    // Only once the page is interactive, so crawlers (which never open a live connection) don't wake anything.
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender) WakeService.WakeAll();
     }
 
     private void FilterProjects(string tag)
