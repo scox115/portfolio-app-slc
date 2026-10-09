@@ -12,3 +12,4 @@ Each record explains one significant decision: the problem, what was chosen, wha
 | [0006](0006-contact-popup.md) | Show the contact email in a native pop-up with a copy button | Accepted |
 | [0007](0007-blog-posts-as-markdown.md) | Keep blog posts as Markdown files in the repository | Accepted |
 | [0008](0008-shared-portfolio-base.md) | Run the site on the shared portfolio base | Accepted |
+| [0009](0009-wake-projects-on-visit.md) | Wake each project's backend when someone opens the home page | Accepted |

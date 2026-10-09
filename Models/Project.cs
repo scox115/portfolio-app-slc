@@ -10,4 +10,6 @@ public class Project
     public string LiveUrl { get; set; } = string.Empty;
     // Optional screenshot, a path under wwwroot such as "images/projects/my-app.png".
     public string ImageUrl { get; set; } = string.Empty;
+    // Optional: the backend to wake when someone opens the home page.
+    public WakeTarget? Wake { get; set; }
 }
