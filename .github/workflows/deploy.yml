@@ -63,11 +63,14 @@ jobs:
           if az containerapp show --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" --output none 2>/dev/null; then
             az containerapp update --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" --image "$IMAGE" --output none
           else
-            environment=$(az deployment group show --resource-group "$SHARED_GROUP" --name portfolio-shared \
-              --query properties.outputs.environmentName.value --output tsv)
-            environment_id=$(az containerapp env show --resource-group "$SHARED_GROUP" --name "$environment" --query id --output tsv)
+            # The deploy app can use the shared environment but can't read the rest of its resource group,
+            # so setup-azure.ps1 saves the environment's ID as a variable.
+            if [ -z "$ENVIRONMENT_ID" ]; then
+              echo "::error::AZURE_CONTAINERAPPS_ENVIRONMENT_ID isn't set. Run infra/setup-azure.ps1 again."
+              exit 1
+            fi
             az containerapp create --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" \
-              --environment "$environment_id" --image "$IMAGE" "${registry[@]}" \
+              --environment "$ENVIRONMENT_ID" --image "$IMAGE" "${registry[@]}" \
               --ingress external --target-port 8080 --cpu 0.5 --memory 1Gi \
               --min-replicas 0 --max-replicas 3 --tags app=portfolio-slc --output none
             # Blazor Server keeps each visitor's circuit on one replica.
@@ -79,5 +82,5 @@ jobs:
           echo "Deployed $IMAGE to https://$fqdn" >> "$GITHUB_STEP_SUMMARY"
         env:
           RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
-          SHARED_GROUP: ${{ vars.AZURE_SHARED_RESOURCE_GROUP }}
+          ENVIRONMENT_ID: ${{ vars.AZURE_CONTAINERAPPS_ENVIRONMENT_ID }}
           REGISTRY_PASSWORD: ${{ secrets.GHCR_READ_TOKEN }}
