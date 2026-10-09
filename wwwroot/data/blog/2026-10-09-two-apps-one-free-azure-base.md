@@ -3,6 +3,8 @@ title: Two apps, one free Azure base
 date: 2026-10-09
 summary: How I moved my game and this site onto one shared Azure setup that costs nothing while idle, the outage I caused along the way, and what I'd do differently.
 tags: Azure, .NET, AI, Job search
+image: /images/blog/two-apps-one-free-azure-base.jpg
+imageAlt: Title card for the post, with a diagram of this site and the game sharing one Azure Container Apps environment and SQL server
 ---
 
 My portfolio now has two live apps: [Kings of the Card Arena](https://play.scottcoxdev.com), a card battler with a Blazor WebAssembly front end and an ASP.NET Core API, and this site. Until this week they lived in two Azure subscriptions and three regions, and each had its own container environment, log workspace and SQL server. This site was even pulling its image from a paid registry on the other side of the country.
