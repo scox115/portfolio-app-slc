@@ -21,7 +21,7 @@ My personal site: who I am, my résumé, and the projects I've built. It is a **
 | --- | --- |
 | **App** | Blazor Web App with server-side interactivity; pages are prerendered so search engines and link previews see real HTML ([ADR 0001](docs/adr/0001-blazor-web-app-on-container-apps.md)) |
 | **Content** | Project cards come from [`wwwroot/data/projects.json`](wwwroot/data/projects.json), so adding a project means editing data, not markup ([ADR 0003](docs/adr/0003-projects-as-data.md)) |
-| **Hosting** | A Docker image on Azure Container Apps, with HTTPS terminated at the ingress and forwarded headers trusted by the app |
+| **Hosting** | A Docker image in GitHub Container Registry, running on Azure Container Apps in the environment all my portfolio apps share, with HTTPS terminated at the ingress and forwarded headers trusted by the app ([ADR 0008](docs/adr/0008-shared-portfolio-base.md)) |
 | **Domain** | `scottcoxdev.com` and `www` bound to the Container App with free managed certificates ([ADR 0004](docs/adr/0004-custom-domain-managed-certificates.md)) |
 | **CI/CD** | Pull requests must pass the `build` check; a green build on `main` triggers the deploy, which signs in to Azure with OIDC, so no Azure secret is stored in GitHub ([ADR 0002](docs/adr/0002-ci-then-deploy-with-oidc.md)) |
 | **Monitoring** | A scheduled workflow checks the site every 30 minutes and opens a "Site down" issue if it fails ([ADR 0005](docs/adr/0005-uptime-check-in-github-actions.md)) |

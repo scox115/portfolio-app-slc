@@ -1,6 +1,8 @@
 name: Deploy to Azure
 
-# Runs after CI passes on main, or by hand from the Actions tab.
+# Runs after CI passes on main, or by hand from the Actions tab. The site runs in the shared portfolio
+# base's Container Apps environment (docs/adr/0008-shared-portfolio-base.md); infra/setup-azure.ps1
+# sets the variables this reads.
 on:
   workflow_run:
     workflows: [CI]
@@ -10,52 +12,72 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write   # sign in to Azure with OIDC
+  packages: write   # push the image to GitHub Container Registry
 
 concurrency:
   group: deploy-production
   cancel-in-progress: false
 
 env:
-  ACR_NAME: portolioappslc
-  REGISTRY: portolioappslc-hnh6e7etcyg0h9eu.azurecr.io
-  IMAGE: portfolioappslc
   CONTAINER_APP: portfolio-app-slc
-  RESOURCE_GROUP: Portfolio-SLC
   # The commit CI tested (workflow_run), or the current main (by hand).
   SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
 
 jobs:
   deploy:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    if: vars.AZURE_CLIENT_ID != '' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://portfolio-app-slc.gentlehill-e454e29c.westus2.azurecontainerapps.io
+      url: https://scottcoxdev.com
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.SHA }}
 
-      - name: Build image
-        run: docker build -t "$REGISTRY/$IMAGE:$SHA" -f Dockerfile .
+      - name: Build and push the image
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY,,}:$SHA"
+          echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker build -t "$image" -f Dockerfile .
+          docker push "$image"
+          echo "IMAGE=$image" >> "$GITHUB_ENV"
 
       - name: Sign in to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Push image to registry
+      # The first deploy creates the app in the shared environment; later ones only change its image, so
+      # the custom domains bound by infra/move-domain.ps1 stay as they are.
+      - name: Deploy to the Container App
         run: |
-          az acr login --name "$ACR_NAME"
-          docker push "$REGISTRY/$IMAGE:$SHA"
-
-      - name: Deploy to Container App
-        run: |
-          az extension add --name containerapp --upgrade --yes
-          az containerapp update \
-            --name "$CONTAINER_APP" \
-            --resource-group "$RESOURCE_GROUP" \
-            --image "$REGISTRY/$IMAGE:$SHA"
+          az extension add --name containerapp --upgrade --yes --only-show-errors
+          registry=()
+          if [ -n "$REGISTRY_PASSWORD" ]; then
+            registry=(--registry-server ghcr.io --registry-username "$GITHUB_REPOSITORY_OWNER" --registry-password "$REGISTRY_PASSWORD")
+          fi
+          if az containerapp show --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" --output none 2>/dev/null; then
+            az containerapp update --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" --image "$IMAGE" --output none
+          else
+            environment=$(az deployment group show --resource-group "$SHARED_GROUP" --name portfolio-shared \
+              --query properties.outputs.environmentName.value --output tsv)
+            environment_id=$(az containerapp env show --resource-group "$SHARED_GROUP" --name "$environment" --query id --output tsv)
+            az containerapp create --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" \
+              --environment "$environment_id" --image "$IMAGE" "${registry[@]}" \
+              --ingress external --target-port 8080 --cpu 0.5 --memory 1Gi \
+              --min-replicas 0 --max-replicas 3 --tags app=portfolio-slc --output none
+            # Blazor Server keeps each visitor's circuit on one replica.
+            az containerapp ingress sticky-sessions set --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" \
+              --affinity sticky --output none
+          fi
+          fqdn=$(az containerapp show --name "$CONTAINER_APP" --resource-group "$RESOURCE_GROUP" \
+            --query properties.configuration.ingress.fqdn --output tsv)
+          echo "Deployed $IMAGE to https://$fqdn" >> "$GITHUB_STEP_SUMMARY"
+        env:
+          RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          SHARED_GROUP: ${{ vars.AZURE_SHARED_RESOURCE_GROUP }}
+          REGISTRY_PASSWORD: ${{ secrets.GHCR_READ_TOKEN }}
