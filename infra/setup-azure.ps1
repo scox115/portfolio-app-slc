@@ -112,11 +112,12 @@ Grant-Role $spId 'Contributor' $environment.id
 
 Write-Host "Saving settings to GitHub ($GitHubRepo)" -ForegroundColor Cyan
 $variables = [ordered]@{
-    AZURE_CLIENT_ID              = $appId
-    AZURE_TENANT_ID              = $tenantId
-    AZURE_SUBSCRIPTION_ID        = $SubscriptionId
-    AZURE_RESOURCE_GROUP         = $ResourceGroup
-    AZURE_SHARED_RESOURCE_GROUP  = $SharedResourceGroup
+    AZURE_CLIENT_ID                    = $appId
+    AZURE_TENANT_ID                    = $tenantId
+    AZURE_SUBSCRIPTION_ID              = $SubscriptionId
+    AZURE_RESOURCE_GROUP               = $ResourceGroup
+    AZURE_SHARED_RESOURCE_GROUP        = $SharedResourceGroup
+    AZURE_CONTAINERAPPS_ENVIRONMENT_ID = $environment.id
 }
 foreach ($name in $variables.Keys) {
     & gh variable set $name --body $variables[$name] --repo $GitHubRepo
