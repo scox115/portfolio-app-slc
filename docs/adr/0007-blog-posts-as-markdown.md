@@ -13,6 +13,7 @@ The site needs a blog about building software with AI tools and the job search. 
 - `BlogService`, a singleton, reads the folder once, the first time the blog is visited, renders each post to HTML with Markdig and sorts the posts newest first. Raw HTML in posts is disabled.
 - `/blog` lists the posts and `/blog/{slug}` shows one. Both are static server-rendered pages, and an unknown slug returns the site's 404 page.
 - A post is published by merging its pull request, which deploys the site. A post dated in the future is scheduled: it stays off the Blog page and its URL returns 404 until that day starts in US Eastern time, with no second deploy needed. In Development every post shows, so scheduled posts can be previewed locally.
+- An RSS 2.0 feed at `/blog/feed.xml` lists the published posts with their full text, linked from the Blog page and from every page's `<head>`.
 
 ## Alternatives considered
 
