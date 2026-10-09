@@ -6,17 +6,29 @@ namespace portfolio_app_slc.Services;
 
 // Loads the blog posts from wwwroot/data/blog/*.md once, newest first.
 // Each file starts with a front matter block of "key: value" lines between "---" lines.
+// A post dated in the future stays hidden until that day starts in US Eastern time,
+// except in Development, so scheduled posts can still be previewed locally.
 public class BlogService
 {
+    private static readonly TimeZoneInfo PublishTimeZone = FindPublishTimeZone();
+
     private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
         .DisableHtml()
         .Build();
 
-    public IReadOnlyList<BlogPost> Posts { get; }
+    private readonly IReadOnlyList<BlogPost> _allPosts;
+    private readonly bool _showScheduled;
+    private readonly TimeProvider _time;
 
-    public BlogService(IWebHostEnvironment env, ILogger<BlogService> logger)
+    public IReadOnlyList<BlogPost> Posts =>
+        _showScheduled ? _allPosts : _allPosts.Where(p => p.Date <= Today()).ToList();
+
+    public BlogService(IWebHostEnvironment env, ILogger<BlogService> logger, TimeProvider time)
     {
+        _showScheduled = env.IsDevelopment();
+        _time = time;
+
         var posts = new List<BlogPost>();
         foreach (var file in env.WebRootFileProvider.GetDirectoryContents("data/blog"))
         {
@@ -31,7 +43,7 @@ public class BlogService
                 posts.Add(post);
         }
 
-        Posts = posts
+        _allPosts = posts
             .OrderByDescending(p => p.Date)
             .ThenBy(p => p.Slug)
             .ToList();
@@ -39,6 +51,22 @@ public class BlogService
 
     public BlogPost? Find(string slug) =>
         Posts.FirstOrDefault(p => string.Equals(p.Slug, slug, StringComparison.OrdinalIgnoreCase));
+
+    private DateOnly Today() =>
+        DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(_time.GetUtcNow(), PublishTimeZone).DateTime);
+
+    // The container image includes time zone data; fall back to UTC if it ever doesn't.
+    private static TimeZoneInfo FindPublishTimeZone()
+    {
+        try
+        {
+            return TimeZoneInfo.FindSystemTimeZoneById("America/New_York");
+        }
+        catch (TimeZoneNotFoundException)
+        {
+            return TimeZoneInfo.Utc;
+        }
+    }
 
     // Returns null when the post has no valid date, so one bad file can't take the blog down.
     private static BlogPost? Parse(string slug, string text)

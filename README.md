@@ -79,7 +79,7 @@ imageAlt: What the cover image shows
 The post, in Markdown.
 ```
 
-`date` is required, and a post without it is skipped. `image` and `imageAlt` are optional and set the cover shown on the post's card and at the top of the post; 16:9 works best. Posts are listed newest first, and raw HTML in a post is not rendered. Images go in `wwwroot/images/blog/` and are linked as `![Alt text](/images/blog/my-image.png)`. A post goes live when its pull request is merged.
+`date` is required, and a post without it is skipped. `image` and `imageAlt` are optional and set the cover shown on the post's card and at the top of the post; 16:9 works best. Posts are listed newest first, and raw HTML in a post is not rendered. Images go in `wwwroot/images/blog/` and are linked as `![Alt text](/images/blog/my-image.png)`. A post goes live when its pull request is merged, or on its `date` if that is in the future: until then it is hidden from the Blog page and its URL returns 404. The day starts at midnight US Eastern time. Running locally in Development shows every post, so you can preview a scheduled one.
 
 ## Architecture Decision Records
 

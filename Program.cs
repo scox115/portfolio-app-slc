@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<ProjectService>();
+builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<BlogService>();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<WakeService>();
