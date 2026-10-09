@@ -39,6 +39,7 @@ app.UseHttpsRedirection();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+app.MapBlogFeed();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

@@ -49,6 +49,18 @@
     opacity: 0.95;
 }
 
+.banner-feed {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+}
+
+    .banner-feed a {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
 .empty {
     text-align: center;
     color: #666;

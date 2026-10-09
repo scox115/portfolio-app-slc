@@ -52,6 +52,13 @@ public class BlogService
     public BlogPost? Find(string slug) =>
         Posts.FirstOrDefault(p => string.Equals(p.Slug, slug, StringComparison.OrdinalIgnoreCase));
 
+    // The moment a post goes live: the start of its date in the publish time zone.
+    public static DateTimeOffset PublishedAt(BlogPost post)
+    {
+        var start = post.Date.ToDateTime(TimeOnly.MinValue, DateTimeKind.Unspecified);
+        return new DateTimeOffset(start, PublishTimeZone.GetUtcOffset(start));
+    }
+
     private DateOnly Today() =>
         DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(_time.GetUtcNow(), PublishTimeZone).DateTime);
 
