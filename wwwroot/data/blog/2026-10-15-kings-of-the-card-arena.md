@@ -3,8 +3,8 @@ title: Kings of the Card Arena, built like a production service
 date: 2026-10-15
 summary: How a small card game became a live, tested, scale-to-zero .NET and Azure service, the bugs that only showed up in the real world, and what I learned about reviewing an AI's work.
 tags: .NET, Blazor, SignalR, Azure, AI, Job search
-image: /images/blog/kings-of-the-card-arena-duel.png
-imageAlt: Two heroes in a live duel in Kings of the Card Arena
+image: /images/blog/kings-of-the-card-arena.jpg
+imageAlt: Title card for the post, with a screenshot of two heroes in a live duel in Kings of the Card Arena
 ---
 
 In my [first post](/blog/2026-10-08-building-my-portfolio-with-ai) I promised to write about the bigger project in my [Project Showcase](/#projects). This is that post.
