@@ -71,3 +71,20 @@ Automation makes shipping safe. It doesn't make it unattended.
 https://scottcoxdev.com/blog/2026-10-22-every-merge-ships
 
 #DevOps #Azure #dotnet #ContinuousDelivery #OpenToWork
+
+---
+
+## 5. How many players can half a CPU handle? (goes live Thu, Oct 29)
+
+How many players can half a CPU handle? I load-tested my card game to find out.
+
+I ran k6 against the same container image production runs, capped at the same size: half a CPU and 1 GB. One replica handles about 200 players fighting at once with a median of 11 ms. At 400 it fails.
+
+The row I learned the most from was 300. Zero errors, and it passed every threshold. But duelists waited up to 17 seconds to find an opponent. A dashboard that only counts errors would call that healthy. A player would not.
+
+Then I made it scale out without paying for Azure SignalR Service: the duel lobby and live messages go through the SQL database the game already has. 40 players joining through two replicas at once became exactly 20 duels, with nobody paired twice.
+
+https://scottcoxdev.com/blog/2026-10-29-how-many-players
+
+#dotnet #SignalR #Azure #Performance #OpenToWork
+
