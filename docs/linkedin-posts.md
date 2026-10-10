@@ -103,3 +103,19 @@ The fix was small: an optional email at sign-up and a gentle reminder in town. T
 https://scottcoxdev.com/blog/2026-11-05-accounts-done-properly
 
 #dotnet #Security #Identity #AI #OpenToWork
+
+---
+
+## 7. Don't trust the browser: keeping gold honest in my game (goes live Thu, Nov 12)
+
+The first bug the AI audit found in my card game was in code I wrote: the browser told the server who won. Anyone with developer tools could have handed themselves gold.
+
+The fix was to stop asking. The browser now sends only the card you picked. The server rolls every die, plays the boss's move and pays the reward once. A version check on every save means two browser tabs can't spend the same gold twice.
+
+Then came the harder question, asked again with every new feature: how would someone farm this? Duels on the same network pay nothing. Only three duels a day against the same opponent are rewarded. The practice bot never pays, and guests can't wager.
+
+AI found the first hole in minutes. Deciding where to look is still the job.
+
+https://scottcoxdev.com/blog/2026-11-12-dont-trust-the-browser
+
+#dotnet #Security #GameDev #AI #OpenToWork
