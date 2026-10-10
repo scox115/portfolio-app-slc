@@ -119,3 +119,19 @@ AI found the first hole in minutes. Deciding where to look is still the job.
 https://scottcoxdev.com/blog/2026-11-12-dont-trust-the-browser
 
 #dotnet #Security #GameDev #AI #OpenToWork
+
+---
+
+## 8. Replays without re-rolling the dice (goes live Thu, Nov 19)
+
+My card game now lets anyone watch a finished duel again, card by card. The interesting part was deciding what to save.
+
+The textbook answer is the random seed: store the dice rolls and run the battle code again. It's small and clever. It also means the first time I rebalance a card, every old replay quietly changes. A duel you won on a lucky block could replay as a loss.
+
+So the game saves what each card actually did, with both heroes' health afterwards, in the same database save as the duel. A replay can't disagree with the result that was paid out, whatever happens to the rules later.
+
+AI wrote most of the feature. The choice that mattered came from knowing the game will keep changing.
+
+https://scottcoxdev.com/blog/2026-11-19-replays-without-rerolling
+
+#dotnet #GameDev #SoftwareArchitecture #AI #OpenToWork
