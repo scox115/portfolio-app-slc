@@ -88,3 +88,18 @@ https://scottcoxdev.com/blog/2026-10-29-how-many-players
 
 #dotnet #SignalR #Azure #Performance #OpenToWork
 
+---
+
+## 6. Accounts done properly, and the gap I missed (goes live Thu, Nov 5)
+
+My card game had password reset by email, with tests for every case. Almost nobody could use it.
+
+The game's accounts are built like a real service's: refresh tokens that work once, two-factor with codes that can't be replayed, one-click guest play, and buttons to download or delete your data. Reset links expire, work once, and the page never reveals whether a hero exists.
+
+Then I looked at the sign-in screen and asked: if reset needs an email, where do players give us one? Only inside a dialog no new player has a reason to open.
+
+The fix was small: an optional email at sign-up and a gentle reminder in town. The lesson wasn't. Tests prove code does what it says. Only using the product shows whether anyone can get to it.
+
+https://scottcoxdev.com/blog/2026-11-05-accounts-done-properly
+
+#dotnet #Security #Identity #AI #OpenToWork
