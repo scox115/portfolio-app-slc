@@ -135,3 +135,19 @@ AI wrote most of the feature. The choice that mattered came from knowing the gam
 https://scottcoxdev.com/blog/2026-11-19-replays-without-rerolling
 
 #dotnet #GameDev #SoftwareArchitecture #AI #OpenToWork
+
+---
+
+## 9. When strangers pick the names: moderation in my card game (goes live Thu, Nov 26)
+
+Hero names and portraits in my card game show up on a public leaderboard. So the first stranger with a slur would have put it in front of everyone.
+
+Names get a short block list that sees through swapped digits and stretched letters, and only blocks risky fragments as whole words. The tests that matter most are the ones that must pass: Classic Knight and Badminton Ace have to get through.
+
+Portraits are checked by Azure AI Content Safety before they're saved. If the check is down, the upload waits. Letting pictures through unchecked would quietly switch screening off.
+
+Players can report what gets past, and an admin decides. No automatic hiding after N reports, because a few accounts could then hide anyone.
+
+https://scottcoxdev.com/blog/2026-11-26-when-strangers-pick-the-names
+
+#dotnet #Azure #TrustAndSafety #AI #OpenToWork
