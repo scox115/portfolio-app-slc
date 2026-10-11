@@ -1,7 +1,7 @@
 [
   {
-    "title": "GameAppPortfolio",
-    "description": "Kings of the Card Arena: a turn-based card battler with live PvP duels over SignalR, boss fights and a Gold Shop, built with Clean Architecture on .NET 10 and deployed to Azure on every merge.",
+    "title": "Kings of the Card Arena",
+    "description": "A turn-based card battler with live PvP duels over SignalR, boss fights and a Gold Shop, built with Clean Architecture on .NET 10 and deployed to Azure on every merge.",
     "type": "Game",
     "tags": [".NET", "ASP.NET", "SQL", "Cloud", "Blazor", "Web API"],
     "gitHubUrl": "https://github.com/scox115/gameappportfolio",
