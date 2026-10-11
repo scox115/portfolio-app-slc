@@ -72,7 +72,7 @@
                 <div class="project-card">
                     @if (!string.IsNullOrEmpty(project.ImageUrl))
                     {
-                        <img src="@project.ImageUrl" alt="Screenshot of @project.Title" class="project-image" loading="lazy" />
+                        <img src="@project.ImageUrl" alt="@(string.IsNullOrEmpty(project.ImageAlt) ? $"Screenshot of {project.Title}" : project.ImageAlt)" class="project-image" loading="lazy" />
                     }
                     <div class="project-meta">
                         <span class="project-type">@project.Type</span>
@@ -92,7 +92,7 @@
                         }
                         @if (!string.IsNullOrEmpty(project.LiveUrl))
                         {
-                            <a href="@project.LiveUrl" target="_blank" rel="noopener" class="link-icon live">Live Demo &nearr;</a>
+                            <a href="@project.LiveUrl" target="_blank" rel="noopener" class="link-icon live">@(string.IsNullOrEmpty(project.LiveLabel) ? "Live Demo" : project.LiveLabel) &nearr;</a>
                         }
                     </div>
                 </div>

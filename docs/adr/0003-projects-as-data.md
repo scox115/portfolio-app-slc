@@ -9,7 +9,7 @@ The project showcase will change as new projects start and old ones are retired.
 
 ## Decision
 
-- Projects live in `wwwroot/data/projects.json`, one object per card: title, description, type, tags and optional `gitHubUrl`, `liveUrl` and `imageUrl`.
+- Projects live in `wwwroot/data/projects.json`, one object per card: title, description, type, tags and optional `gitHubUrl`, `liveUrl`, `liveLabel`, `imageUrl` and `imageAlt`.
 - `ProjectService`, a singleton, reads the file once through the web root file provider and deserializes it into `Project` objects.
 - The home page renders the cards and builds the tag filter from the tags the projects actually use.
 - Screenshots go in `wwwroot/images/projects/` and render at 16:9 at the top of a card.

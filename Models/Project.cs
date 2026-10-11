@@ -8,8 +8,12 @@ public class Project
     public string[] Tags { get; set; } = [];
     public string GitHubUrl { get; set; } = string.Empty;
     public string LiveUrl { get; set; } = string.Empty;
+    // Optional text for the LiveUrl link, such as "View app" for a project whose page isn't a demo.
+    public string LiveLabel { get; set; } = string.Empty;
     // Optional screenshot, a path under wwwroot such as "images/projects/my-app.png".
     public string ImageUrl { get; set; } = string.Empty;
+    // Optional alt text for the image, when it isn't a screenshot.
+    public string ImageAlt { get; set; } = string.Empty;
     // Optional: the backend to wake when someone opens the home page.
     public WakeTarget? Wake { get; set; }
 }
