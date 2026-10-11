@@ -1,12 +1,22 @@
 [
   {
-    "title": "GameAppPortfolio",
-    "description": "Kings of the Card Arena: a turn-based card battler with live PvP duels over SignalR, boss fights and a Gold Shop, built with Clean Architecture on .NET 10 and deployed to Azure on every merge.",
+    "title": "Kings of the Card Arena",
+    "description": "A turn-based card battler with live PvP duels over SignalR, boss fights and a Gold Shop, built with Clean Architecture on .NET 10 and deployed to Azure on every merge.",
     "type": "Game",
     "tags": [".NET", "ASP.NET", "SQL", "Cloud", "Blazor", "Web API"],
     "gitHubUrl": "https://github.com/scox115/gameappportfolio",
     "liveUrl": "https://play.scottcoxdev.com",
     "imageUrl": "images/projects/game-app-portfolio.jpg",
     "wake": { "settingsUrl": "https://play.scottcoxdev.com/appsettings.Production.json" }
+  },
+  {
+    "title": "Word Search Fun",
+    "description": "A word search game for Android with four difficulty levels and four game modes, built in C# with Unity. First released on the Google Play Store and the Amazon Appstore in 2012.",
+    "type": "Mobile game",
+    "tags": ["C#", "Unity", "Android", "Mobile"],
+    "liveUrl": "https://papabeargames.scottcoxdev.com/",
+    "liveLabel": "View app",
+    "imageUrl": "images/projects/word-search-fun.jpg",
+    "imageAlt": "Word Search Fun banner: a smiling bear with a magnifying glass over a letter grid, and the line Relaxing puzzles, no timers"
   }
 ]

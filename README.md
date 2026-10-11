@@ -60,7 +60,7 @@ Add an entry to [`wwwroot/data/projects.json`](wwwroot/data/projects.json):
 }
 ```
 
-`gitHubUrl`, `liveUrl` and `imageUrl` are optional. To have the home page wake a project's backend when someone visits, add `"wake": { "url": "https://my-api.example.com/health/ready" }`, or for a Blazor WebAssembly app whose API address can change, `"wake": { "settingsUrl": "https://my-app.example.com/appsettings.Production.json" }` ([ADR 0009](docs/adr/0009-wake-projects-on-visit.md)). Images go in `wwwroot/images/projects/`, ideally 16:9. The tag filters on the home page are built from the tags you use.
+`gitHubUrl`, `liveUrl` and `imageUrl` are optional. `liveLabel` changes the live link's text from "Live Demo" (for example to "View app"), and `imageAlt` replaces the image's default "Screenshot of …" alt text. To have the home page wake a project's backend when someone visits, add `"wake": { "url": "https://my-api.example.com/health/ready" }`, or for a Blazor WebAssembly app whose API address can change, `"wake": { "settingsUrl": "https://my-app.example.com/appsettings.Production.json" }` ([ADR 0009](docs/adr/0009-wake-projects-on-visit.md)). Images go in `wwwroot/images/projects/`, ideally 16:9. The tag filters on the home page are built from the tags you use.
 
 ## Write a blog post
 
